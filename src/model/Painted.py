@@ -2,10 +2,10 @@ from dataclasses import dataclass
 
 from src.defined import SKETCH_RANGE
 
-class CoordinatesIsOutOfRange(Exception):
+class CoordinatesOutOfRange(Exception):
     pass
 
-class ColorIsOutOfRange(Exception):
+class ColorsOutOfRange(Exception):
     pass
 
 def isNotOkRange(a:int) -> bool:
@@ -13,7 +13,7 @@ def isNotOkRange(a:int) -> bool:
 
 @dataclass
 class Painted:
-    ip:str
+    timestamp:int
     x:int
     y:int
     r:int
@@ -21,11 +21,9 @@ class Painted:
     b:int
 
     def __post_init__(self):
-        def isNORange(a:int) -> bool:
-            return a > SKETCH_RANGE[0] or a < 0
         def isNORangeC(a:int) -> bool:
             return a > 255 or a < 0
-        if isNORange(self.x) or isNotOkRange(self.y):
-            raise CoordinatesIsOutOfRange()
+        if self.x > SKETCH_RANGE[0] or self.y > SKETCH_RANGE[1] or self.x < 0 or self.y < 0:
+            raise CoordinatesOutOfRange()
         elif isNORangeC(self.r) or isNORangeC(self.g) or isNORangeC(self.b):
-            raise ColorIsOutOfRange()
+            raise ColorsOutOfRange()
