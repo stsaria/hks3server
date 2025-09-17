@@ -40,3 +40,7 @@ class App:
     @staticmethod
     def _getSketchRange() -> Response:
         return jsonify({"status": {"id":0, "description": "It's a success!"}, "c":{"x":SKETCH_RANGE[0], "y":SKETCH_RANGE[1]}})
+    @_app.route("/getHistory")
+    @staticmethod
+    def _getHistory() -> Response:
+        return jsonify({"status": {"id":0, "description": "It's a success!"}, "c":[{"ts":l[0], "x":l[1], "y":l[2], "r":l[3], "g":l[4], "b":l[5]} for l in Painteds.getHistory()]})

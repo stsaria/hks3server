@@ -50,7 +50,16 @@ class Painteds:
             for l in ps:
                 s[(l.x, l.y)] = (l.r, l.g, l.b)
         return s
-    
+    @classmethod
+    def getHistory(cls) -> list[tuple[int,int,int,int,int,int]]:
+        with cls._ipAndPaintedsSLock:
+            logs = cls._ipAndPaintedsS.copy()
+        h = []
+        for ps in logs.values():
+            for l in ps:
+                h.append((l.timestamp, l.x, l.y, l.r, l.g, l.b))
+        h = sorted(h, key=lambda l: l[0])
+        return h
 
 
 
